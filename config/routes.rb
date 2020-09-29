@@ -6,9 +6,11 @@ Rails.application.routes.draw do
       post '/login', to: 'sessions#create'
       delete '/logout', to: 'sessions#destroy'
       get '/logged_in', to: 'sessions#is_logged_in?'
-      resources :users, only: [:create, :index, :show, :update]
+      resources :users, only: [:create, :index, :show, :update] do 
+        resources :reservations, only: [:index]
+      end
       resources :studios, only: [:index, :show] 
-      resources :reservations, only: [:index, :show, :create, :delete]
+      resources :reservations, only: [:index, :show, :create, :destroy]
     end
   end
 end
