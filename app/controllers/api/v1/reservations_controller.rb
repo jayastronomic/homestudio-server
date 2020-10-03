@@ -12,12 +12,15 @@ module Api
                 end
             end
 
-            def index 
-                @reservations = current_user.reservations
-                if @reservations
-                    render json: @reservations
-                else
-                    render json: {status: "INCOMPLETE", errors: "Reservations Not Found"}
+            def index
+                @user = User.find(params[:user_id]) 
+                if authorized_user?
+                    @reservations = @user.reservations
+                    if @reservations
+                        render json: @reservations
+                    else
+                        render json: {status: "INCOMPLETE", errors: "Reservations Not Found"}
+                    end
                 end
             end
 
